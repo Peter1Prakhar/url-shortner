@@ -4,7 +4,7 @@ import { usersTable } from "../models/user.model.js";
 import {eq} from "drizzle-orm";
 import { signupPostRequestSchema, loginPostRequestSchema } from "../validations/request.validations.js";
 import { hashPassword } from "../utils/hash.js";
-import jwt  from "jsonwebtoken";
+import { createUserToken } from "../utils/token.js";
 
 export const register = async (req, res) => {
   // Registration logic here
@@ -45,6 +45,6 @@ export const login = async (req, res) => {
   if (hashedPassword !== user.password) {
     return res.status(400).json({ message: "Invalid email or password." });
   }
-  const token = jwt.sign({userId: user.id}, process.env.JWT_SECRET);
+  const token = await createUserToken({id: user.id});
   res.status(200).json({ token }); 
 }
