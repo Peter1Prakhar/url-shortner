@@ -10,6 +10,12 @@ app.use(express.json())
 app.use(authMiddleware);
 
 app.use("/api", userRoutes);
-
+app.get("/", (req, res) => {
+    const user = req.user;
+    if(user){
+        return res.status(200).json({message: "User is logged in", user})
+    }
+    res.status(200).json({message: "User is not logged in"})
+})
 
 app.listen(PORT, () => console.log(`Server is running on port: ${PORT}`))
