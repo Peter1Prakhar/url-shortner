@@ -1,10 +1,9 @@
+import {validateUserToken}  from "../utils/token.js";
 /***
  * @param {import("express").Request} req
  * @param {import("express").Response} res
  * @param {import("express").NextFunction} next
  */
-
-import { validateUserToken } from "../utils/token";
 
 export function authMiddleware(req, res, next) {
   const authHeader = req.headers["authorization"];
